@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-
-import { Button } from "reactstrap";
-
+import Button from "components/CustomButton/CustomButton.jsx";
+import { connect } from "react-redux";
+import setBgAction from "actions/setBgAction";
+import setColorAction from "actions/setColorAction";
 class FixedPlugin extends Component {
   constructor(props) {
     super(props);
@@ -30,24 +31,24 @@ class FixedPlugin extends Component {
               <div className="badge-colors text-center">
                 <span
                   className={
-                    this.props.bgColor === "black"
+                    this.props.bgState.bgColor === "black"
                       ? "badge filter badge-dark active"
                       : "badge filter badge-dark"
                   }
                   data-color="black"
                   onClick={() => {
-                    this.props.handleBgClick("black");
+                    this.props.setBgAction("black");
                   }}
                 />
                 <span
                   className={
-                    this.props.bgColor === "white"
+                    this.props.bgState.bgColor === "white"
                       ? "badge filter badge-light active"
                       : "badge filter badge-light"
                   }
                   data-color="white"
                   onClick={() => {
-                    this.props.handleBgClick("white");
+                    this.props.setBgAction("white");
                   }}
                 />
               </div>
@@ -57,57 +58,57 @@ class FixedPlugin extends Component {
               <div className="badge-colors text-center">
                 <span
                   className={
-                    this.props.activeColor === "primary"
+                    this.props.activeState.activeColor === "primary"
                       ? "badge filter badge-primary active"
                       : "badge filter badge-primary"
                   }
                   data-color="primary"
                   onClick={() => {
-                    this.props.handleActiveClick("primary");
+                    this.props.setColorAction("primary");
                   }}
                 />
                 <span
                   className={
-                    this.props.activeColor === "info"
+                    this.props.activeState.activeColor === "info"
                       ? "badge filter badge-info active"
                       : "badge filter badge-info"
                   }
                   data-color="info"
                   onClick={() => {
-                    this.props.handleActiveClick("info");
+                    this.props.setColorAction("info");
                   }}
                 />
                 <span
                   className={
-                    this.props.activeColor === "success"
+                    this.props.activeState.activeColor === "success"
                       ? "badge filter badge-success active"
                       : "badge filter badge-success"
                   }
                   data-color="success"
                   onClick={() => {
-                    this.props.handleActiveClick("success");
+                    this.props.setColorAction("success");
                   }}
                 />
                 <span
                   className={
-                    this.props.activeColor === "warning"
+                    this.props.activeState.activeColor === "warning"
                       ? "badge filter badge-warning active"
                       : "badge filter badge-warning"
                   }
                   data-color="warning"
                   onClick={() => {
-                    this.props.handleActiveClick("warning");
+                    this.props.setColorAction("warning");
                   }}
                 />
                 <span
                   className={
-                    this.props.activeColor === "danger"
+                    this.props.activeState.activeColor === "danger"
                       ? "badge filter badge-danger active"
                       : "badge filter badge-danger"
                   }
                   data-color="danger"
                   onClick={() => {
-                    this.props.handleActiveClick("danger");
+                    this.props.setColorAction("danger");
                   }}
                 />
               </div>
@@ -117,7 +118,7 @@ class FixedPlugin extends Component {
                 href="https://www.creative-tim.com/product/paper-dashboard-react"
                 color="primary"
                 block
-                className="btn-round"
+                round
               >
                 Download now
               </Button>
@@ -127,10 +128,10 @@ class FixedPlugin extends Component {
                 href="https://www.creative-tim.com/product/paper-dashboard-react/#/documentation/tutorial"
                 color="default"
                 block
-                className="btn-round"
+                round
                 outline
               >
-                <i className="nc-icon nc-paper" /> Documentation
+                <i className="nc-icon nc-paper"></i> Documentation
               </Button>
             </li>
             <li className="header-title">Want more components?</li>
@@ -139,8 +140,8 @@ class FixedPlugin extends Component {
                 href="https://www.creative-tim.com/product/paper-dashboard-pro-react"
                 color="danger"
                 block
-                className="btn-round"
-                target="_blank"
+                round
+                disabled
               >
                 Get pro version
               </Button>
@@ -151,5 +152,11 @@ class FixedPlugin extends Component {
     );
   }
 }
-
-export default FixedPlugin;
+const mapStateToProps = state => ({
+  ...state
+});
+const mapDispatchToProps = dispatch => ({
+  setBgAction: (payload) => dispatch(setBgAction(payload)),
+  setColorAction: (payload) => dispatch(setColorAction(payload))
+});
+export default connect(mapStateToProps, mapDispatchToProps)(FixedPlugin);
